@@ -3,11 +3,10 @@ from abc import *
 __author__ = 'klaus'
 
 
-class Orb(ABC):
+class Orb:
     __metaclass__ = ABCMeta
 
     def __init__(self, name, radius, surface, year_scale=1, day_scale=1, rotation_cw=True):
-
         self.__system_center = None
         self.__system = []
         self.__name = name
@@ -44,7 +43,7 @@ class Star(Orb):
     __metaclass__ = Orb
 
     def __init__(self, name, radius, year_scale=1, day_scale=1, rotation_cw=True, light_strength=1):
-        super().__init__(name, radius, year_scale, day_scale, rotation_cw)
+        super(Star, self).__init__(name, radius, year_scale, day_scale, rotation_cw)
         self.__light_strength = light_strength
 
 
