@@ -1,6 +1,6 @@
 from abc import *
 
-__author__ = 'klaus'
+__author__ = 'pwngu'
 
 
 class Orb:
