@@ -140,8 +140,6 @@ class SolarSystem(DirectObject):
     else:
       self.yearscale -= 10
 
-
-
   def showTexture(self):
     if(self.texture == False):
         self.sun.clearTexture()
