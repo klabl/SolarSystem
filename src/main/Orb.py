@@ -12,8 +12,14 @@ class Orb:
     __metaclass__ = ABCMeta
 
     def __init__(self, name, radius, surface, year_scale=1, day_scale=1, rotation_cw=True):
+
+        self.pos_x, self.pos_y, self.pos_z = 0, 0, 0
+        self.cur_rotation_angle_year = 0
+        self.cur_rotation_angle = 0
+
         self.system_center = None
         self.system = []
+
         self.name = name
         self.radius = radius
         self.surface = surface
@@ -28,52 +34,42 @@ class Orb:
         else:
             raise Exception
 
-    def get_system(self):
-        return self.system
-
     def set_system_center(self, orb):
+
         if isinstance(orb, Orb):
             self.system_center = orb
         else:
             raise Exception
 
-    @abstractmethod
     def update(self, time):
-        raise NotImplementedError("Abstract Method not implemented yet")
 
-    @abstractmethod
+        self.cur_rotation_angle += self.day_scale
+        self.cur_rotation_angle_year += self.year_scale
+
+        for orb in self.system:
+            orb.update(time)
+
     def draw(self):
-        raise NotImplementedError("Abstract Method not implemented yet")
+        # TODO alle Parameter auf attribute beziehen z.B. bei rotate
+        # Reihenfolge: Erst wird transliert DANN rotiert
+        # das was ganz unten steht wird als erstes ausgefuehrt
+
+        # yearscale
+        glRotatef(self.cur_rotation_angle_year, 0, 1, 0)
+        glTranslatef(self.pos_x, self.pos_y, self.pos_z)
+
+        # dayscale
+        glRotatef(self.cur_rotation_angle, 0, 1, 0)
+        gluSphere(self.surface, self.radius, 20, 12)
+
+        for orb in self.system:
+            orb.draw()
 
 
 class Planet(Orb):
 
     def __init__(self, name, radius, surface, year_scale=1, day_scale=1, rotation_cw_=True):
-        super(Planet, self).__init__(name, radius, surface, year_scale, day_scale)
-        self.cur_rotation_angle = 0
-        self.cur_rotation_angle_year = 0
-        self.pos_x, self.pos_y, self.pos_z = 0, 0, 0
-
-    def draw(self):
-        # TODO alle Parameter auf attribute beziehen z.B. bei rotate
-        # Reihenfolge: Erst wird transliert DANN rotiert
-            # das was ganz unten steht wird als erstes ausgefuehrt
-        # yearscale
-        glRotatef(self.cur_rotation_angle_year, 0, 1, 0)
-        glTranslatef(self.pos_x, self.pos_y, self.pos_z)
-        # dayscale
-        glRotatef(self.cur_rotation_angle, 0, 1, 0)
-        gluSphere(self.surface, self.radius, 20, 12)
-
-    def update(self, time):
-        """
-        Hier werden alle Werte berechnet
-
-        :param time: Zeit
-        :return:
-        """
-        self.cur_rotation_angle += self.day_scale
-        self.cur_rotation_angle_year += self.year_scale
+        super(Planet, self).__init__(name, radius, surface, year_scale, day_scale, rotation_cw_)
 
 
 class Star(Orb):
@@ -82,16 +78,10 @@ class Star(Orb):
         super(Star, self).__init__(name, radius, year_scale, day_scale, rotation_cw)
         self.__light_strength = light_strength
 
-    def update(self, time):
-        raise NotImplementedError("Abstract Method not implemented yet")
-
-    def draw(self):
-        raise NotImplementedError("Abstract Method not implemented yet")
-
 
 class Surface(object):
 
     def __init__(self, size, pattern, circle):
-        self.__size = size
-        self.__pattern = pattern
-        self.__circle = circle
+        self.size = size
+        self.pattern = pattern
+        self.circle = circle

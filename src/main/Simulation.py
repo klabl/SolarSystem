@@ -56,7 +56,6 @@ def on_draw():
     planet3.draw()
 
 
-
 def update(time):
     """
     Update Method - hier wird nur berechnet nicht gezeichnet, bzw die update Methoden der Planeten aufgerufen
