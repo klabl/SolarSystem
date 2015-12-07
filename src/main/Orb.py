@@ -1,6 +1,4 @@
 from abc import *
-from math import*
-from src.tmp.Drawable import Drawable
 
 from pyglet.gl.gl import *
 from pyglet.gl.glu import *
