@@ -51,6 +51,11 @@ def on_draw():
     glRotatef(-45, 1, 0, 0)
     planet2.draw()
 
+    glLoadIdentity()
+    planet3.pos_x = 20
+    planet3.draw()
+
+
 
 def update(time):
     """
@@ -62,6 +67,7 @@ def update(time):
     # print("Time: %s" % time)
     planet1.update(time)
     planet2.update(time)
+    planet3.update(time)
     # print("x: %s y: %s z: %s" % (planet2.pos_x, planet2.pos_y, planet2.pos_z))
 
 
@@ -88,8 +94,10 @@ def pause(pause=True):
 
 # Initialize planets
 # gluNewQuadrtic ist die standard textur
-planet1 = Planet("Test Planet", 3, gluNewQuadric())
-planet2 = Planet("Test Planet2", 1, gluNewQuadric(), day_scale=0.5)
+q = gluNewQuadric()
+planet1 = Planet("Test Planet", 3, q)
+planet2 = Planet("Test Planet2", 1, q, day_scale=0.5)
+planet3 = Planet("Test Planet3", 1, q, year_scale=0.1, day_scale=1)
 
 # Setting update method
 pyglet.clock.schedule(update)
