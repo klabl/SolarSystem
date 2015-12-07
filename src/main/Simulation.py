@@ -2,6 +2,7 @@ import pyglet
 from pyglet.gl.glu import *
 from pyglet.gl.gl import *
 
+from src.main.Camera import Camera
 from src.main.Orb import Planet
 
 __author__ = 'mreilaender'
@@ -9,6 +10,9 @@ __author__ = 'mreilaender'
 # asd
 
 window = pyglet.window.Window(resizable=False, fullscreen=True)
+
+# Kamera
+camera = Camera()
 
 
 def init():
@@ -31,12 +35,10 @@ def on_draw():
     # Lege Perspektive fest
     gluPerspective(45, window.width/window.height, 0.1, 100.0)
 
-    #
-    gluLookAt(
-            0, 60, 0,
-            0, 0, 0,
-            0, 0, 1
-            )
+    global camera
+    camera.eyey = 10
+    camera.upz = 1
+    camera.draw()
 
     # Lade ModelView Matrix
     glMatrixMode(GL_MODELVIEW)
@@ -54,6 +56,7 @@ def on_draw():
     glLoadIdentity()
     planet3.pos_x = 20
     planet3.draw()
+
 
 
 def update(time):
