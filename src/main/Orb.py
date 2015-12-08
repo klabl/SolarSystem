@@ -42,8 +42,17 @@ class Orb:
         for orb in self.system:
             orb.show_tex(show, orb_name)
 
-    def __repr__(self):
-        return self.name + str(self.system)
+    def move(self, move=True, orb_name=None):
+        if orb_name is None or orb_name == self.name:
+            if move:
+                # TODO: resume moving self
+                pass
+            else:
+                # TODO: stop moving self
+                pass
+
+        for orb in self.system:
+            orb.move(move, orb_name)
 
     def set_system_center(self, orb):
 
@@ -68,25 +77,15 @@ class Orb:
 
     def change_speed(self, factor, orb_name=None):
 
-        if orb_name is None:
+        if orb_name is None or orb_name == self.name:
+            # TODO: multiply current speed with factor
+            pass
 
-            self.day_scale *= factor
-            self.year_scale *= factor
+        for orb in self.system:
+            orb.change_speed(factor, orb_name)
 
-            for orb in self.system:
-                orb.day_scale *= factor
-                orb.year_scale *= factor
-            return
-
-        if self.name == orb_name:
-            self.day_scale *= factor
-            self.year_scale *= factor
-        else:
-            for orb in self.system:
-                if orb.name == orb_name:
-                    orb.day_scale *= factor
-                    orb.year_scale *= factor
-                    break
+    def __repr__(self):
+        return self.name + (str(self.system) if len(self.system) != 0 else "")
 
 
 class Planet(Orb):

@@ -72,8 +72,7 @@ class SolarSystem(DirectObject):
         self.neptune_model = OrbModel("../models/neptun.jpg", 1)
         self.neptune = Planet("neptune", 45, self.neptune_model, 1, 1, True, self.sun)
 
-        print self.sun.system
-        print self.earth.system
+        print self.sun
 
     def showTexture(self):
             self.sun.show_tex(self.texture)
