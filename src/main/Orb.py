@@ -6,9 +6,9 @@ __author__ = 'Klaus'
 class Orb:
     __metaclass__ = ABCMeta
 
-    def __init__(self, name, radius, model, year_scale=1, day_scale=1, rotation_cw=True, system_center=None):
+    def __init__(self, name, radius, model, year_scale, day_scale, rotation_cw=True, system_center=None):
 
-        print "init " + name
+        print ("init " + name)
 
         self.system = []
 

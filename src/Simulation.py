@@ -47,7 +47,29 @@ class SolarSystem(DirectObject):
         self.moon_model = OrbModel("../models/moon_1k_tex.jpg")
         self.moon = Planet("moon", 3, self.moon_model, 1, 1, True, self.earth)
 
+        self.mercury_model = OrbModel("../models/mercury_1k_tex.jpg")
+        self.mercury = Planet("mercury", 3, self.mercury_model, 1, 1, True, self.sun)
+
+        self.venus_model = OrbModel("../models/venus_1k_tex.jpg")
+        self.venus = Planet("venus", 3, self.venus_model, 1, 1, True, self.sun)
+
+        self.mars_model = OrbModel("../models/mars_1k_tex.jpg")
+        self.mars = Planet("mars", 3, self.mars_model, 1, 1, True, self.sun)
+
+        self.jupiter_model = OrbModel("../models/jupiter.jpg")
+        self.jupiter = Planet("juptier", 3, self.jupiter_model, 1, 1, True, self.sun)
+
+        self.saturn_model = OrbModel("../models/saturn.jpg")
+        self.saturn = Planet("saturn", 3, self.saturn_model, 1, 1, True, self.sun)
+
+        self.uranus_model = OrbModel("../models/uranus.jpg")
+        self.mercury = Planet("uranus", 3, self.uranus_model, 1, 1, True, self.sun)
+
+        self.neptune_model = OrbModel("../models/neptun.jpg")
+        self.neptune = Planet("neptune", 3, self.neptune_model, 1, 1, True, self.sun)
+
+
 
 w = SolarSystem()
 
-base.run()
+run()

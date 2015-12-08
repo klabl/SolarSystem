@@ -168,7 +168,7 @@ class SolarSystem(DirectObject):
 
   def handleSpace(self):
     if self.simRunning:
-      print "Pausing Simulation"
+      print ("Pausing Simulation")
       self.spacekeyText.setText(
         "Leertaste: Stoppen des gesamten Solar Systems [PAUSE]")
 
@@ -210,7 +210,7 @@ class SolarSystem(DirectObject):
                   self.orbit_period_neptun, self.nkeyEventText)
 
     else:
-      print "Resuming Simulation"
+      print ("Resuming Simulation")
       self.spacekeyText.setText(
         "Leertaste: Stoppen des gesamten Solar Systems [LAUFEND]")
       if not self.day_period_sun.isPlaying():
@@ -246,10 +246,10 @@ class SolarSystem(DirectObject):
 
   def togglePlanet(self, planet, day, orbit = None, text = None):
     if day.isPlaying():
-      print "Stoppen von " + planet
+      print ("Stoppen von " + planet)
       state = " [PAUSED]"
     else:
-      print "Weiterlaufen von " + planet
+      print ("Weiterlaufen von " + planet)
       state = " [RUNNING]"
 
     if text:
