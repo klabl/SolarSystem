@@ -49,11 +49,11 @@ class Orb:
     def move(self, move=True, orb_name=None):
         if orb_name is None or orb_name == self.name:
             if move:
-                # TODO: resume moving self
-                pass
+                self.day_period.resume()
+                self.year_period.resume()
             else:
-                # TODO: stop moving self
-                pass
+                self.day_period.pause()
+                self.year_period.pause()
 
         for orb in self.system:
             orb.move(move, orb_name)

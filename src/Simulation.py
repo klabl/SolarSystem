@@ -30,10 +30,13 @@ class SolarSystem(DirectObject):
         self.sun.rotate()
 
         self.show_textures = True
+        self.is_paused = False
 
-        self.accept("t", self.showTexture)
+        self.accept("t", self.showTextures)
+        self.accept("p", self.pause)
 
-# end __init__
+
+    # end __init__
 
     def loadPlanets(self):
         self.sky = loader.loadModel("../models/solar_sky_sphere")
@@ -42,9 +45,9 @@ class SolarSystem(DirectObject):
         self.sky.reparentTo(render)
         self.sky.setScale(100)
 
-        self.sun = Star("sun", 0, OrbModel("../models/sun_1k_tex.jpg", self.sizescale), 1/0.5, 1, True, None, 1)
+        self.sun = Star("sun", 0, OrbModel("../models/sun_1k_tex.jpg", 2 * self.sizescale), 1/0.5, 1, True, None, 1)
         self.earth = Planet("earth", 5, OrbModel("../models/earth_1k_tex.jpg", self.sizescale), 1/0.3, 1, True, self.sun)
-        self.moon = Planet("moon", 3, OrbModel("../models/moon_1k_tex.jpg", 0.1 * self.sizescal), 1/0.2, 1, True, self.earth)
+        self.moon = Planet("moon", 3, OrbModel("../models/moon_1k_tex.jpg", 0.1 * self.sizescale), 1/0.2, 1, True, self.earth)
         self.mercury = Planet("mercury", 15, OrbModel("../models/mercury_1k_tex.jpg", 0.385 * self.sizescale), 1/0.15, 1, True, self.sun)
         self.venus = Planet("venus", 20, OrbModel("../models/venus_1k_tex.jpg", 0.923 * self.sizescale), 1/0.1, 1, True, self.sun)
         self.mars = Planet("mars", 25, OrbModel("../models/mars_1k_tex.jpg", 0.5 * self.sizescale), 1/0.08, 1, True, self.sun)
@@ -55,9 +58,14 @@ class SolarSystem(DirectObject):
 
         print self.sun
 
-    def showTexture(self):
-            self.sun.show_tex(not self.show_textures)
-            self.show_textures = not self.show_textures
+    def showTextures(self):
+        self.sun.show_tex(not self.show_textures)
+        self.show_textures = not self.show_textures
+
+    def pause(self):
+        print "pausing"
+        self.sun.move(not self.is_paused)
+        self.is_pause = not self.is_paused
 
 w = SolarSystem()
 
