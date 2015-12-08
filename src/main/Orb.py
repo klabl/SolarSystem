@@ -6,14 +6,14 @@ __author__ = 'Klaus'
 class Orb:
     __metaclass__ = ABCMeta
 
-    def __init__(self, name, radius, model, year_scale, day_scale, rotation_cw=True, system_center=None):
+    def __init__(self, name, orbit_radius, model, year_scale, day_scale, rotation_cw=True, system_center=None):
 
         print ("init " + name)
 
         self.system = []
 
         self.name = name
-        self.radius = radius
+        self.orbit_radius = orbit_radius
         self.model = model
         self.year_scale = year_scale
         self.day_scale = day_scale
@@ -79,21 +79,21 @@ class Orb:
 
 class Planet(Orb):
 
-    def __init__(self, name, radius, model, year_scale=1, day_scale=1, rotation_cw=True, system_center=None):
-        super(Planet, self).__init__(name, radius, model, year_scale, day_scale, rotation_cw, system_center)
+    def __init__(self, name, orbit_radius, model, year_scale=1, day_scale=1, rotation_cw=True, system_center=None):
+        super(Planet, self).__init__(name, orbit_radius, model, year_scale, day_scale, rotation_cw, system_center)
 
 
 class Star(Orb):
 
-    def __init__(self, name, radius, model, year_scale=1, day_scale=1, rotation_cw=True, system_center=None, light_strength=1):
-        super(Star, self).__init__(name, radius, model, year_scale, day_scale, rotation_cw, system_center)
+    def __init__(self, name, orbit_radius, model, year_scale=1, day_scale=1, rotation_cw=True, system_center=None, light_strength=1):
+        super(Star, self).__init__(name, orbit_radius, model, year_scale, day_scale, rotation_cw, system_center)
         self.__light_strength = light_strength
 
 
 class OrbModel(object):
 
-    def __init__(self, texture, size_scale=1, model="../models/planet_sphere"):
+    def __init__(self, texture, size=1, model="../models/planet_sphere"):
         self.model = loader.loadModel(model)
         self.texture = loader.loadTexture(texture)
         self.model.setTexture(self.texture, 1)
-        self.model.setScale(size_scale)
+        self.model.setScale(size)
