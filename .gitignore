@@ -67,3 +67,6 @@ docs/_build/
 target/
 
 # Created by .ignore support plugin (hsz.mobi)
+__init__.pyc
+Orb.pyc
+Drawable.pyc
