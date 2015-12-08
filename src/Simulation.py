@@ -50,4 +50,4 @@ class SolarSystem(DirectObject):
 
 w = SolarSystem()
 
-run()
+base.run()

@@ -8,8 +8,7 @@ class Orb:
 
     def __init__(self, name, radius, model, year_scale=1, day_scale=1, rotation_cw=True, system_center=None):
 
-        self.system_center = system_center
-        self.set_system_center(system_center)
+        print "init " + name
 
         self.system = []
 
@@ -19,9 +18,12 @@ class Orb:
         self.year_scale = year_scale
         self.day_scale = day_scale
         self.rotation_cw = rotation_cw
+        self.orbit_root = None
+
+        self.system_center = system_center
+        self.set_system_center(system_center)
 
         self.model = model
-        self.orbit_root = None
 
 
     def add_orb(self, orb):
@@ -91,7 +93,7 @@ class Star(Orb):
 class OrbModel(object):
 
     def __init__(self, texture, size_scale=1, model="../models/planet_sphere"):
-        self.model = loader.loadTexture(model)
+        self.model = loader.loadModel(model)
         self.texture = loader.loadTexture(texture)
         self.model.setTexture(self.texture, 1)
         self.model.setScale(size_scale)
