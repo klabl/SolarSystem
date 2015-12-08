@@ -29,7 +29,11 @@ class SolarSystem(DirectObject):
         self.loadPlanets()
         # self.rotatePlanets()
 
-    # end __init__
+        self.texture = False
+
+        self.accept("t", self.showTexture)
+
+# end __init__
 
     def loadPlanets(self):
         self.sky = loader.loadModel("../models/solar_sky_sphere")
@@ -38,37 +42,42 @@ class SolarSystem(DirectObject):
         self.sky.reparentTo(render)
         self.sky.setScale(100)
 
-        self.sun_model = OrbModel("../models/sun_1k_tex.jpg")
+        self.sun_model = OrbModel("../models/sun_1k_tex.jpg", 1)
         self.sun = Star("sun", 0, self.sun_model, 1, 1, True, None, 1)
 
-        self.earth_model = OrbModel("../models/earth_1k_tex.jpg")
-        self.earth = Planet("earth", 3, self.earth_model, 1, 1, True, self.sun)
+        self.earth_model = OrbModel("../models/earth_1k_tex.jpg", 1)
+        self.earth = Planet("earth", 5, self.earth_model, 1, 1, True, self.sun)
 
-        self.moon_model = OrbModel("../models/moon_1k_tex.jpg")
+        self.moon_model = OrbModel("../models/moon_1k_tex.jpg", 1)
         self.moon = Planet("moon", 3, self.moon_model, 1, 1, True, self.earth)
 
-        self.mercury_model = OrbModel("../models/mercury_1k_tex.jpg")
-        self.mercury = Planet("mercury", 3, self.mercury_model, 1, 1, True, self.sun)
+        self.mercury_model = OrbModel("../models/mercury_1k_tex.jpg", 1)
+        self.mercury = Planet("mercury", 15, self.mercury_model, 1, 1, True, self.sun)
 
-        self.venus_model = OrbModel("../models/venus_1k_tex.jpg")
-        self.venus = Planet("venus", 3, self.venus_model, 1, 1, True, self.sun)
+        self.venus_model = OrbModel("../models/venus_1k_tex.jpg", 1)
+        self.venus = Planet("venus", 20, self.venus_model, 1, 1, True, self.sun)
 
-        self.mars_model = OrbModel("../models/mars_1k_tex.jpg")
-        self.mars = Planet("mars", 3, self.mars_model, 1, 1, True, self.sun)
+        self.mars_model = OrbModel("../models/mars_1k_tex.jpg", 1)
+        self.mars = Planet("mars", 25, self.mars_model, 1, 1, True, self.sun)
 
-        self.jupiter_model = OrbModel("../models/jupiter.jpg")
-        self.jupiter = Planet("juptier", 3, self.jupiter_model, 1, 1, True, self.sun)
+        self.jupiter_model = OrbModel("../models/jupiter.jpg", 1)
+        self.jupiter = Planet("juptier", 30, self.jupiter_model, 1, 1, True, self.sun)
 
-        self.saturn_model = OrbModel("../models/saturn.jpg")
-        self.saturn = Planet("saturn", 3, self.saturn_model, 1, 1, True, self.sun)
+        self.saturn_model = OrbModel("../models/saturn.jpg", 1)
+        self.saturn = Planet("saturn", 35, self.saturn_model, 1, 1, True, self.sun)
 
-        self.uranus_model = OrbModel("../models/uranus.jpg")
-        self.mercury = Planet("uranus", 3, self.uranus_model, 1, 1, True, self.sun)
+        self.uranus_model = OrbModel("../models/uranus.jpg", 1)
+        self.mercury = Planet("uranus", 40, self.uranus_model, 1, 1, True, self.sun)
 
-        self.neptune_model = OrbModel("../models/neptun.jpg")
-        self.neptune = Planet("neptune", 3, self.neptune_model, 1, 1, True, self.sun)
+        self.neptune_model = OrbModel("../models/neptun.jpg", 1)
+        self.neptune = Planet("neptune", 45, self.neptune_model, 1, 1, True, self.sun)
 
+        print self.sun.system
+        print self.earth.system
 
+    def showTexture(self):
+            self.sun.show_tex(self.texture)
+            self.texture = not self.texture
 
 w = SolarSystem()
 

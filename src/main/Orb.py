@@ -25,7 +25,6 @@ class Orb:
 
         self.model = model
 
-
     def add_orb(self, orb):
 
         if isinstance(orb, Orb):
@@ -33,11 +32,18 @@ class Orb:
         else:
             raise Exception
 
-    def show_tex(self, show=True):
-        if show:
-            self.model.model.setTexture(self.model.texture, 1)
-        else:
-            self.model.model.clearTexture()
+    def show_tex(self, show=True, orb_name=None):
+        if orb_name is None or orb_name == self.name:
+            if show:
+                self.model.model.setTexture(self.model.texture)
+            else:
+                self.model.model.clearTexture()
+
+        for orb in self.system:
+            orb.show_tex(show, orb_name)
+
+    def __repr__(self):
+        return self.name + str(self.system)
 
     def set_system_center(self, orb):
 
@@ -45,11 +51,17 @@ class Orb:
             self.system_center = None
             self.orbit_root = render.attachNewNode('orbit_root_' + self.name)
             self.model.model.reparentTo(self.orbit_root)
+            self.model.model.setPos(self.orbit_radius, 0, 0)
+            print "set pos to " + str(self.orbit_radius)
 
         elif isinstance(orb, Orb):
             self.system_center = orb
             self.orbit_root = orb.orbit_root.attachNewNode('orbit_root_' + self.name)
             self.model.model.reparentTo(self.orbit_root)
+            self.model.model.setPos(orb.model.size + orb.orbit_radius + self.orbit_radius - self.model.size, 0, 0)
+            print "set pos to " + str(orb.model.size + orb.orbit_radius + self.orbit_radius - self.model.size)
+
+            orb.add_orb(self)
 
         else:
             raise Exception
@@ -78,22 +90,21 @@ class Orb:
 
 
 class Planet(Orb):
-
     def __init__(self, name, orbit_radius, model, year_scale=1, day_scale=1, rotation_cw=True, system_center=None):
         super(Planet, self).__init__(name, orbit_radius, model, year_scale, day_scale, rotation_cw, system_center)
 
 
 class Star(Orb):
-
-    def __init__(self, name, orbit_radius, model, year_scale=1, day_scale=1, rotation_cw=True, system_center=None, light_strength=1):
+    def __init__(self, name, orbit_radius, model, year_scale=1, day_scale=1, rotation_cw=True, system_center=None,
+                 light_strength=1):
         super(Star, self).__init__(name, orbit_radius, model, year_scale, day_scale, rotation_cw, system_center)
         self.__light_strength = light_strength
 
 
 class OrbModel(object):
-
     def __init__(self, texture, size=1, model="../models/planet_sphere"):
         self.model = loader.loadModel(model)
         self.texture = loader.loadTexture(texture)
+        self.size = size
         self.model.setTexture(self.texture, 1)
         self.model.setScale(size)
