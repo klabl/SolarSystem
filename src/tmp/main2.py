@@ -20,7 +20,7 @@ planet2 = Planet2()
 camera = Camera()
 
 
-@window.event()
+@window.event
 def on_key_press(symbol, modifier):
     if symbol == key.NUM_ADD:
         global camera

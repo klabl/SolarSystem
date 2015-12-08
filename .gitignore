@@ -5,6 +5,8 @@
 
 # Pycharm
 .idea
+src\main\*.pyc
+src\tmp\*.pyc
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
