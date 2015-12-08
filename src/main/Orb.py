@@ -67,7 +67,7 @@ class Orb:
             self.system_center = orb
             self.orbit_root = orb.orbit_root.attachNewNode('orbit_root_' + self.name)
             self.model.model.reparentTo(self.orbit_root)
-            self.model.model.setPos(orb.model.size + orb.orbit_radius + self.orbit_radius - self.model.size, 0, 0)
+            self.model.model.setPos(self.orbit_radius, 0, 0)
             print "set pos to " + str(orb.model.size + orb.orbit_radius + self.orbit_radius - self.model.size)
 
             orb.add_orb(self)

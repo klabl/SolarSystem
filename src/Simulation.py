@@ -46,31 +46,31 @@ class SolarSystem(DirectObject):
         self.sun = Star("sun", 0, self.sun_model, 1, 1, True, None, 1)
 
         self.earth_model = OrbModel("../models/earth_1k_tex.jpg", self.sizescale)
-        self.earth = Planet("earth", 5, self.earth_model, 1, 1, True, self.sun)
+        self.earth = Planet("earth", self.orbitscale, self.earth_model, 1, 1, True, self.sun)
 
         self.moon_model = OrbModel("../models/moon_1k_tex.jpg", 0.1 * self.sizescale)
-        self.moon = Planet("moon", 3, self.moon_model, 1, 1, True, self.earth)
+        self.moon = Planet("moon", 1.1 * self.orbitscale, self.moon_model, 1, 1, True, self.earth)
 
         self.mercury_model = OrbModel("../models/mercury_1k_tex.jpg", 0.385 * self.sizescale)
-        self.mercury = Planet("mercury", 15, self.mercury_model, 1, 1, True, self.sun)
+        self.mercury = Planet("mercury", 0.38 * self.orbitscale, self.mercury_model, 1, 1, True, self.sun)
 
         self.venus_model = OrbModel("../models/venus_1k_tex.jpg", 0.923 * self.sizescale)
-        self.venus = Planet("venus", 20, self.venus_model, 1, 1, True, self.sun)
+        self.venus = Planet("venus", 0.62 * self.orbitscale, self.venus_model, 1, 1, True, self.sun)
 
         self.mars_model = OrbModel("../models/mars_1k_tex.jpg", 0.5 * self.sizescale)
-        self.mars = Planet("mars", 25, self.mars_model, 1, 1, True, self.sun)
+        self.mars = Planet("mars", 1.37 * self.orbitscale, self.mars_model, 1, 1, True, self.sun)
 
         self.jupiter_model = OrbModel("../models/jupiter.jpg", 1.3 * self.sizescale)
-        self.jupiter = Planet("juptier", 30, self.jupiter_model, 1, 1, True, self.sun)
+        self.jupiter = Planet("juptier", 1.75 * self.orbitscale, self.jupiter_model, 1, 1, True, self.sun)
 
         self.saturn_model = OrbModel("../models/saturn.jpg", 0.7 * self.sizescale)
-        self.saturn = Planet("saturn", 35, self.saturn_model, 1, 1, True, self.sun)
+        self.saturn = Planet("saturn", 2.1 * self.orbitscale, self.saturn_model, 1, 1, True, self.sun)
 
         self.uranus_model = OrbModel("../models/uranus.jpg", 0.8 * self.sizescale)
-        self.mercury = Planet("uranus", 40, self.uranus_model, 1, 1, True, self.sun)
+        self.mercury = Planet("uranus", 2.43 * self.orbitscale, self.uranus_model, 1, 1, True, self.sun)
 
         self.neptune_model = OrbModel("../models/neptun.jpg", 0.6 * self.sizescale)
-        self.neptune = Planet("neptune", 45, self.neptune_model, 1, 1, True, self.sun)
+        self.neptune = Planet("neptune", 2.87 * self.orbitscale, self.neptune_model, 1, 1, True, self.sun)
 
         print self.sun
 
