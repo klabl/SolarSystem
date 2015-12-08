@@ -6,7 +6,7 @@ __author__ = 'Klaus'
 class Orb:
     __metaclass__ = ABCMeta
 
-    def __init__(self, name, radius, model, year_scale=1, day_scale=1, rotation_cw=True, system_center=None,):
+    def __init__(self, name, radius, model, year_scale=1, day_scale=1, rotation_cw=True, system_center=None):
 
         self.system_center = system_center
         self.set_system_center(system_center)
@@ -74,20 +74,17 @@ class Orb:
                     orb.year_scale *= factor
                     break
 
-    def stop(self, orb_name=None):
-
-
 
 class Planet(Orb):
 
-    def __init__(self, name, radius, model, year_scale=1, day_scale=1, rotation_cw_=True):
-        super(Planet, self).__init__(name, radius, model, year_scale, day_scale, rotation_cw_)
+    def __init__(self, name, radius, model, year_scale=1, day_scale=1, rotation_cw=True, system_center=None):
+        super(Planet, self).__init__(name, radius, model, year_scale, day_scale, rotation_cw, system_center)
 
 
 class Star(Orb):
 
-    def __init__(self, name, radius, year_scale=1, day_scale=1, rotation_cw=True, light_strength=1):
-        super(Star, self).__init__(name, radius, year_scale, day_scale, rotation_cw)
+    def __init__(self, name, radius, model, year_scale=1, day_scale=1, rotation_cw=True, system_center=None, light_strength=1):
+        super(Star, self).__init__(name, radius, model, year_scale, day_scale, rotation_cw, system_center)
         self.__light_strength = light_strength
 
 
