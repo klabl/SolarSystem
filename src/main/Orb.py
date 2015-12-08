@@ -31,6 +31,7 @@ class Orb:
 
         if isinstance(orb, Orb):
             self.system.append(orb)
+            orb.system_center = self
         else:
             raise Exception
 

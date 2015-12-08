@@ -1,9 +1,10 @@
 import pyglet
 from pyglet.gl import *
 from pyglet.window import key
+
 from src.tmp.Planet import *
 from src.tmp.Planet2 import *
-from src.tmp.Camera import *
+from src.main.Camera import *
 
 __author__ = "Manuel"
 
@@ -20,16 +21,7 @@ planet2 = Planet2()
 camera = Camera()
 
 
-@window.event()
-def on_key_press(symbol, modifier):
-    if symbol == key.NUM_ADD:
-        global camera
-        print(camera.eyex)
-        camera.eyex -= 1
-    if symbol == key.NUM_SUBTRACT:
-        global camera
-        print(camera.eyex)
-        camera.eyex += 1
+
 
 
 def update(time):
