@@ -6,7 +6,7 @@ from pyglet.window import key
 from src.main.Camera import Camera
 from src.main.Orb import Planet
 
-from thread import start_new_thread
+from _thread import start_new_thread
 
 __author__ = 'mreilaender'
 
@@ -22,7 +22,7 @@ def init():
 @window.event
 def on_draw():
     window.clear()
-
+    
     # draw_lines()
     glLoadIdentity()
 
@@ -53,16 +53,16 @@ def on_draw():
 
 
 @window.event
-def on_mouse_drag(x, y, dx, dy, buttons, modifiers):
-    camera.x += dx
-    camera.y += dy
-
-
-@window.event
 def on_mouse_motion(x, y, dx, dy):
-    camera.reset()
-    camera.rotatey = 1
-    camera.angle += dx
+    # camera.reset()
+    if dx != 0:
+        pass
+    if dy != 0:
+        pass
+    if dx != 0 and dy != 0:
+        pass
+    # camera.rotatey = 1
+    # camera.angle += dx
     # print("%s %s %s" % (camera.rotatex, camera.rotatey, camera.rotatez))
 
 
@@ -77,6 +77,23 @@ def pressing():
     while keyboard[key.D]:
         camera.x += factor
 
+    while keyboard[key.UP]:
+        camera.reset()
+        camera.rotatex = 1
+        camera.angle += factor
+    while keyboard[key.DOWN]:
+        camera.reset()
+        camera.rotatex = 1
+        camera.angle -= factor
+    while keyboard[key.LEFT]:
+        camera.reset()
+        camera.rotatey = 1
+        camera.angle += factor
+    while keyboard[key.RIGHT]:
+        camera.rotatey = 1
+        camera.angle -= factor
+
+
 
 @window.event
 def on_key_press(symbol, mod):
@@ -84,11 +101,6 @@ def on_key_press(symbol, mod):
     if symbol == key.SPACE:
         global stop
         stop = not stop
-
-
-@window.event
-def on_key_release(symbol, modifiers):
-    is_pressed = False
 
 
 def update(time):

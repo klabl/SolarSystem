@@ -1,5 +1,4 @@
 from pyglet.gl import glTranslatef, glRotatef
-from pyglet.gl.glu import gluLookAt
 
 from src.tmp.Drawable import Drawable
 
@@ -19,9 +18,9 @@ class Camera(Drawable):
         self.rotatez = 0
 
     def draw(self):
-        glTranslatef(-self.x, -self.y, -self.z)
         if self.rotatex != 0 or self.rotatey != 0 or self.rotatez != 0:
             glRotatef(self.angle, self.rotatex, self.rotatey, self.rotatez)
+        glTranslatef(-self.x, -self.y, -self.z)
 
     def reset(self):
         self.rotatex, self.rotatey, self.rotatez = 0, 0, 0
