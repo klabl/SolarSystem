@@ -1,29 +1,28 @@
 from abc import *
 
-from pyglet.gl.gl import *
-from pyglet.gl.glu import *
-__author__ = 'pwngu'
+__author__ = 'Klaus'
 
 
 class Orb:
-    # What does metaclass mean? Super class?
     __metaclass__ = ABCMeta
 
-    def __init__(self, name, radius, surface, year_scale=1, day_scale=1, rotation_cw=True):
+    def __init__(self, name, radius, model, year_scale=1, day_scale=1, rotation_cw=True, system_center=None,):
 
-        self.pos_x, self.pos_y, self.pos_z = 0, 0, 0
-        self.cur_rotation_angle_year = 0
-        self.cur_rotation_angle = 0
+        self.system_center = system_center
+        self.set_system_center(system_center)
 
-        self.system_center = None
         self.system = []
 
         self.name = name
         self.radius = radius
-        self.surface = surface
+        self.model = model
         self.year_scale = year_scale
         self.day_scale = day_scale
         self.rotation_cw = rotation_cw
+
+        self.model = model
+        self.orbit_root = None
+
 
     def add_orb(self, orb):
 
@@ -32,42 +31,57 @@ class Orb:
         else:
             raise Exception
 
+    def show_tex(self, show=True):
+        if show:
+            self.model.model.setTexture(self.model.texture, 1)
+        else:
+            self.model.model.clearTexture()
+
     def set_system_center(self, orb):
 
-        if isinstance(orb, Orb):
+        if orb is None:
+            self.system_center = None
+            self.orbit_root = render.attachNewNode('orbit_root_' + self.name)
+            self.model.model.reparentTo(self.orbit_root)
+
+        elif isinstance(orb, Orb):
             self.system_center = orb
+            self.orbit_root = orb.orbit_root.attachNewNode('orbit_root_' + self.name)
+            self.model.model.reparentTo(self.orbit_root)
+
         else:
             raise Exception
 
-    def update(self, time):
+    def change_speed(self, factor, orb_name=None):
 
-        self.cur_rotation_angle += self.day_scale
-        self.cur_rotation_angle_year += self.year_scale
+        if orb_name is None:
 
-        for orb in self.system:
-            orb.update(time)
+            self.day_scale *= factor
+            self.year_scale *= factor
 
-    def draw(self):
-        # TODO alle Parameter auf attribute beziehen z.B. bei rotate
-        # Reihenfolge: Erst wird transliert DANN rotiert
-        # das was ganz unten steht wird als erstes ausgefuehrt
+            for orb in self.system:
+                orb.day_scale *= factor
+                orb.year_scale *= factor
+            return
 
-        # yearscale
-        glRotatef(self.cur_rotation_angle_year, 0, 1, 0)
-        glTranslatef(self.pos_x, self.pos_y, self.pos_z)
+        if self.name == orb_name:
+            self.day_scale *= factor
+            self.year_scale *= factor
+        else:
+            for orb in self.system:
+                if orb.name == orb_name:
+                    orb.day_scale *= factor
+                    orb.year_scale *= factor
+                    break
 
-        # dayscale
-        glRotatef(self.cur_rotation_angle, 0, 1, 0)
-        gluSphere(self.surface, self.radius, 20, 12)
+    def stop(self, orb_name=None):
 
-        for orb in self.system:
-            orb.draw()
 
 
 class Planet(Orb):
 
-    def __init__(self, name, radius, surface, year_scale=1, day_scale=1, rotation_cw_=True):
-        super(Planet, self).__init__(name, radius, surface, year_scale, day_scale, rotation_cw_)
+    def __init__(self, name, radius, model, year_scale=1, day_scale=1, rotation_cw_=True):
+        super(Planet, self).__init__(name, radius, model, year_scale, day_scale, rotation_cw_)
 
 
 class Star(Orb):
@@ -77,9 +91,10 @@ class Star(Orb):
         self.__light_strength = light_strength
 
 
-class Surface(object):
+class OrbModel(object):
 
-    def __init__(self, size, pattern, circle):
-        self.size = size
-        self.pattern = pattern
-        self.circle = circle
+    def __init__(self, texture, size_scale=1, model="../models/planet_sphere"):
+        self.model = loader.loadTexture(model)
+        self.texture = loader.loadTexture(texture)
+        self.model.setTexture(self.texture, 1)
+        self.model.setScale(size_scale)
