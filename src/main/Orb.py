@@ -46,6 +46,32 @@ class Orb:
         for orb in self.system:
             orb.show_tex(show, orb_name)
 
+    def pause(self,keytext, orb_name=None):
+        if orb_name is None or orb_name == self.name:
+            self.toggleOrb(self.name,self.day_period,self.year_period,keytext)
+
+        for orb in self.system:
+            orb.pause(keytext,orb_name)
+
+    def toggleOrb(self,planet,day, orbit = None, text = None):
+         if day.isPlaying():
+            print "Stoppen von " + planet
+            state = " [PAUSED]"
+         else:
+            print "Weiterlaufen von " + planet
+            state = " [RUNNING]"
+
+         if text:
+            old = text.getText()
+            text.setText(old[0:old.rfind(' ')] + state)
+
+         self.toggleInterval(day)
+         if orbit: self.toggleInterval(orbit)
+
+    def toggleInterval(self, interval):
+        if interval.isPlaying(): interval.pause()
+        else: interval.resume()
+
     def move(self, move=True, orb_name=None):
         if orb_name is None or orb_name == self.name:
             if move:
@@ -60,10 +86,11 @@ class Orb:
 
     def rotate(self, rotate=True):
         self.day_period.loop()
-        self.year_period.loop()
 
         for orb in self.system:
-            orb.rotate()
+            orb.day_period.loop()
+            orb.year_period.loop()
+
 
     def set_system_center(self, orb):
 
@@ -81,10 +108,10 @@ class Orb:
             self.system_center = orb
             self.orbit_root = orb.orbit_root.attachNewNode('orbit_root_' + self.name)
             self.orb_model.model.reparentTo(self.orbit_root)
-            self.orb_model.model.setPos(self.orbit_radius + self.orb_model.size, 0, 0)
+            self.orb_model.model.setPos(self.orbit_radius, 0, 0)
 
-            self.year_period = self.orbit_root.hprInterval(self.year_scale, Vec3(360, 0, 0))
-            self.day_period = self.orb_model.model.hprInterval(self.day_scale, Vec3(360, 0, 0))
+            self.year_period = self.orbit_root.hprInterval((self.year_scale), Vec3(360, 0, 0))
+            self.day_period = self.orb_model.model.hprInterval((self.day_scale), Vec3(360, 0, 0))
 
             print "set pos to " + str(self.orbit_radius + self.orb_model.size)
 
