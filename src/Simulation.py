@@ -35,11 +35,7 @@ class SolarSystem(DirectObject):
         self.spacekeyText = self.genLabelText("Leertaste: Stoppen des gesamten Solar Systems [LAUFEND]", 0)
 
         self.accept("t", self.showTextures)
-        self.accept("space", self.pauseSystem)
-
-
-
-
+        self.accept("space", self.togglePause)
 
     # end __init__
 
@@ -65,8 +61,9 @@ class SolarSystem(DirectObject):
         self.sun.show_tex(not self.show_textures)
         self.show_textures = not self.show_textures
 
-    def pauseSystem(self):
-        self.sun.pause(self.spacekeyText)
+    def togglePause(self):
+        self.sun.move(self.is_paused)
+        self.is_paused = not self.is_paused
 
 
 

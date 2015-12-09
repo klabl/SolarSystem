@@ -46,31 +46,33 @@ class Orb:
         for orb in self.system:
             orb.show_tex(show, orb_name)
 
-    def pause(self,keytext, orb_name=None):
-        if orb_name is None or orb_name == self.name:
-            self.toggleOrb(self.name,self.day_period,self.year_period,keytext)
+    # def pause(self, keytext, orb_name=None):
+    #     if orb_name is None or orb_name == self.name:
+    #         self.toggleOrb(self.name, self.day_period, self.year_period, keytext)
+    #
+    #     for orb in self.system:
+    #         orb.pause(keytext, orb_name)
 
-        for orb in self.system:
-            orb.pause(keytext,orb_name)
+    # def toggleOrb(self, planet, day, orbit=None, text=None):
+    #     if day.isPlaying():
+    #         print "Stoppen von " + planet
+    #         state = " [PAUSED]"
+    #     else:
+    #         print "Weiterlaufen von " + planet
+    #         state = " [RUNNING]"
+    #
+    #     if text:
+    #         old = text.getText()
+    #         text.setText(old[0:old.rfind(' ')] + state)
+    #
+    #     self.toggleInterval(day)
+    #     if orbit: self.toggleInterval(orbit)
 
-    def toggleOrb(self,planet,day, orbit = None, text = None):
-         if day.isPlaying():
-            print "Stoppen von " + planet
-            state = " [PAUSED]"
-         else:
-            print "Weiterlaufen von " + planet
-            state = " [RUNNING]"
-
-         if text:
-            old = text.getText()
-            text.setText(old[0:old.rfind(' ')] + state)
-
-         self.toggleInterval(day)
-         if orbit: self.toggleInterval(orbit)
-
-    def toggleInterval(self, interval):
-        if interval.isPlaying(): interval.pause()
-        else: interval.resume()
+    # def toggleInterval(self, interval):
+    #     if interval.isPlaying():
+    #         interval.pause()
+    #     else:
+    #         interval.resume()
 
     def move(self, move=True, orb_name=None):
         if orb_name is None or orb_name == self.name:
@@ -90,7 +92,6 @@ class Orb:
         for orb in self.system:
             orb.day_period.loop()
             orb.year_period.loop()
-
 
     def set_system_center(self, orb):
 
