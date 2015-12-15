@@ -29,12 +29,19 @@ class Orb:
 
         self.orb_model = orb_model
 
+        self.is_moving = True
+
     def add_orb(self, orb):
 
         if isinstance(orb, Orb):
             self.system.append(orb)
         else:
             raise Exception
+
+    def get_orb(self, orb_name):
+        for orb in self.system:
+            if orb.name == orb_name:
+                return orb
 
     def show_tex(self, show=True, orb_name=None):
         if orb_name is None or orb_name == self.name:
@@ -74,24 +81,45 @@ class Orb:
     #     else:
     #         interval.resume()
 
+    def toggle_moving(self, orb_name=None):
+        if orb_name is None or orb_name == self.name:
+            if self.is_moving:
+                self.move(False)
+            else:
+                self.move(True)
+
+        for orb in self.system:
+            orb.toggle_moving(orb_name)
+
     def move(self, move=True, orb_name=None):
         if orb_name is None or orb_name == self.name:
             if move:
                 self.day_period.resume()
                 self.year_period.resume()
+                self.is_moving = True
             else:
                 self.day_period.pause()
                 self.year_period.pause()
+                self.is_moving = False
 
         for orb in self.system:
             orb.move(move, orb_name)
 
-    def rotate(self, rotate=True):
+    # def rotate(self, rotate=True):
+    #     self.is_moving = True
+    #     self.day_period.loop()
+    #     self.year_period.loop()
+    #
+    #     for orb in self.system:
+    #         orb.rotate(rotate)
+
+    def rotate(self, rotate=True):  # Unschoen, sollte wie oben sein, funktioniert aber nicht
         self.day_period.loop()
 
         for orb in self.system:
             orb.day_period.loop()
             orb.year_period.loop()
+
 
     def set_system_center(self, orb):
 
@@ -129,6 +157,16 @@ class Orb:
 
         for orb in self.system:
             orb.change_speed(factor, orb_name)
+
+    def speed_up(self):
+        self.year_period.setPlayRate(self.year_period.getPlayRate() + 2)
+        for orb in self.system:
+            orb.speed_up()
+
+    def slow_down(self):
+        self.year_period.setPlayRate(self.year_period.getPlayRate() - 2)
+        for orb in self.system:
+            orb.slow_down()
 
     def __repr__(self):
         return self.name + (str(self.system) if len(self.system) != 0 else "")
